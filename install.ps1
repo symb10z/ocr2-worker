@@ -6,8 +6,10 @@ if (-not (Get-Command docker -ErrorAction SilentlyContinue)) { throw "Docker н�
 Write-Host "Проверяю видеокарту в Docker..."
 docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
 if ($LASTEXITCODE -ne 0) { throw "Видеокарта в Docker недоступна: обновите драйвер NVIDIA и включите WSL2-бэкенд Docker Desktop." }
-$repo  = Read-Host "Адрес репозитория, например https://github.com/USER/ocr2-jobs"
+$repo  = Read-Host "Адрес репозитория (Enter = https://github.com/symb10z/ocr2-jobs)"
+if (-not $repo) { $repo = "https://github.com/symb10z/ocr2-jobs" }
 $token = Read-Host "Токен регистрации runner"
+if (-not $token) { throw "Токен пустой: возьмите его на GitHub (Settings -> Actions -> Runners -> New self-hosted runner, строка --token)." }
 $label = Read-Host "Метка runner (Enter = ocr2-gpu; для третьего ПК введите ocr2-gpu-b)"
 if (-not $label) { $label = "ocr2-gpu" }
 Write-Host "Собираю образ..."
