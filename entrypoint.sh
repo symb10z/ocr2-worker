@@ -6,6 +6,6 @@ cd /home/runner/actions-runner
 if [ ! -f .runner ]; then
   : "${REPO_URL:?нужен REPO_URL}" "${RUNNER_TOKEN:?нужен RUNNER_TOKEN}"
   ./config.sh --unattended --url "$REPO_URL" --token "$RUNNER_TOKEN" \
-      --name "${RUNNER_NAME:-ocr2-gpu-$(hostname)}" --labels ocr2-gpu --replace
+      --name "${RUNNER_NAME:-ocr2-gpu-$(hostname)}" --labels "${RUNNER_LABELS:-ocr2-gpu}" --replace
 fi
 exec ./run.sh
